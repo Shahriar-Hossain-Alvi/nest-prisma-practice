@@ -1,4 +1,11 @@
-import { Body, Controller, Param, ParseIntPipe, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { BookmarkService } from './bookmark.service';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 
@@ -13,5 +20,11 @@ export class BookmarkController {
     @Body() dto: CreateBookmarkDto,
   ) {
     return this.bookmarkService.create(userId, dto);
+  }
+
+  // get all bookmark
+  @Get(':userId')
+  findAllBookmarkOfAUser(@Param('userId', ParseIntPipe) userId: number) {
+    return this.bookmarkService.findAll(userId);
   }
 }
