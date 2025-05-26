@@ -8,8 +8,8 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   // get all users
-  findAll() {
-    return this.prisma.user.findMany({
+  async findAll() {
+    return await this.prisma.user.findMany({
       select: {
         id: true,
         email: true,
@@ -18,8 +18,8 @@ export class UserService {
   }
 
   //   find single user
-  findOne(id: number) {
-    return this.prisma.user.findUnique({
+  async findOne(id: number) {
+    return await this.prisma.user.findUnique({
       where: { id },
       select: {
         id: true,
@@ -29,8 +29,8 @@ export class UserService {
   }
 
   // update user
-  updateUser(id: number, dto: { email?: string; password?: string }) {
-    return this.prisma.user.update({
+  async updateUser(id: number, dto: { email?: string; password?: string }) {
+    return await this.prisma.user.update({
       where: { id },
       data: dto,
       select: {
@@ -41,8 +41,8 @@ export class UserService {
   }
 
   // delete user
-  deleteUser(id: number) {
-    return this.prisma.user.delete({
+  async deleteUser(id: number) {
+    return await this.prisma.user.delete({
       where: { id },
       select: {
         id: true,
