@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthDto } from './dto/auth.dto';
 
@@ -14,6 +14,24 @@ export class AuthService {
         password: dto.password,
       },
     });
+
+    return user;
+  }
+
+  //sign in function
+  async signin(dto: AuthDto) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: dto.email,
+      },
+    });
+
+    console.log(user?.password);
+    console.log(dto.password);
+
+    if (!user || user.password !== dto.password) {
+      throw new ForbiddenException('Invalid Credentials');
+    }
 
     return user;
   }
