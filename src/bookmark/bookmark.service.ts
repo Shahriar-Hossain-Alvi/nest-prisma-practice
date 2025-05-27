@@ -48,7 +48,7 @@ export class BookmarkService {
     });
 
     if (!bookmark) {
-      throw new ForbiddenException('Boookmark not found');
+      throw new ForbiddenException('Bookmark not found');
     }
 
     return this.prisma.bookmark.update({
@@ -64,8 +64,23 @@ export class BookmarkService {
 
   // delete bookmark
   async remove(userId: number, id: number): Promise<Bookmark> {
+    const bookmark = await this.prisma.bookmark.findUnique({
+      where: {
+        id_userId: { id, userId },
+      },
+    });
+
+    if (!bookmark) {
+      throw new ForbiddenException('Bookmark not found');
+    }
+
     return await this.prisma.bookmark.delete({
-      where: { id },
+      where: {
+        id_userId: {
+          id,
+          userId,
+        },
+      },
     });
   }
 }

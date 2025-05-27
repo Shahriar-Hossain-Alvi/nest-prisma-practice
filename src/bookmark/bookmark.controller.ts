@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -30,7 +31,7 @@ export class BookmarkController {
     return this.bookmarkService.findAll(userId);
   }
 
-  //get single bookmark
+  //get single bookmark of a user
   @Get(':userId/:id')
   findSingleBookmarkOfAUser(
     @Param('userId', ParseIntPipe) userId: number,
@@ -47,5 +48,14 @@ export class BookmarkController {
     @Body() dto: EditBookmarkDto,
   ) {
     return this.bookmarkService.update(userId, id, dto);
+  }
+
+  // delete a bookmark
+  @Delete(':userId/:id')
+  removeABookmark(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    return this.bookmarkService.remove(userId, id);
   }
 }
