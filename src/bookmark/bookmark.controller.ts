@@ -24,10 +24,19 @@ export class BookmarkController {
     return this.bookmarkService.create(userId, dto);
   }
 
-  // get all bookmark
+  // get all bookmark of a user
   @Get(':userId')
   findAllBookmarkOfAUser(@Param('userId', ParseIntPipe) userId: number) {
     return this.bookmarkService.findAll(userId);
+  }
+
+  //get single bookmark
+  @Get(':userId/:id')
+  findSingleBookmarkOfAUser(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    return this.bookmarkService.findOne(userId, id);
   }
 
   // update bookmark

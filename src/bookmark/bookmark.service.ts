@@ -18,7 +18,7 @@ export class BookmarkService {
     });
   }
 
-  // find all bookmarks
+  // find all bookmarks of a user
   async findAll(userId: number): Promise<Bookmark[]> {
     return await this.prisma.bookmark.findMany({
       where: { userId },
